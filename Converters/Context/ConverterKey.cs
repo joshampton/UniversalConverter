@@ -2,7 +2,7 @@
 
 namespace UniversalConverter
 {
-    public sealed class ConverterKey
+    public sealed class ConverterKey : IEquatable<ConverterKey>
     {
         private readonly Type sourceType;
         private readonly Type destinationType;
@@ -34,11 +34,15 @@ namespace UniversalConverter
 
         public override bool Equals(object obj)
         {
-            var target = obj as ConverterKey;
+            return Equals(obj as ConverterKey);
+        }
 
-            return target != null
-                && target.SourceType == this.SourceType
-                && target.DestinationType == this.DestinationType;
+
+        public bool Equals(ConverterKey other)
+        {
+            return other != null
+                && other.SourceType == this.SourceType
+                && other.DestinationType == this.DestinationType;
         }
 
         public static bool operator ==(ConverterKey left, ConverterKey right)
@@ -51,5 +55,6 @@ namespace UniversalConverter
         {
             return !(left == right);
         }
+
     }
 }

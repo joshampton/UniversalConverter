@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{191CE941-3C1F-45EE-804A-C9B949A385FF}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniversalConverter</RootNamespace>
     <AssemblyName>UniversalConverter</AssemblyName>
@@ -33,6 +33,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\ConversionExtensions.cs" />
+    <Compile Include="Converters\Context\ConverterContext.cs" />
+    <Compile Include="Converters\Context\ConverterKey.cs" />
+    <Compile Include="Converters\Interface\IConverter.cs" />
+    <Compile Include="Converters\Implementation\ConvertibleConverter.cs" />
+    <Compile Include="Converters\Implementation\TypeConverterConverter.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\QueryStringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="UniversalConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
