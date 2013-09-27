@@ -44,7 +44,7 @@
     <Compile Include="Converters\Implementation\ConvertibleConverter.cs" />
     <Compile Include="Converters\Implementation\TypeConverterConverter.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\QueryStringExtensions.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="UniversalConverter.cs" />
   </ItemGroup>

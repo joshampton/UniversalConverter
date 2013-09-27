@@ -12,10 +12,17 @@ namespace UniversalConverter
 
         public static bool TryConvert<T>(this object target, out T result, IFormatProvider formatProvider = null)
         {
+            if(target == null)
+                throw new ArgumentNullException("target");
+
             bool success = false;
 
+            object tempResult = default(T);
+
             lock (baton)
-                success = converter.TryConvert(target, out result, formatProvider);
+                success = converter.TryConvert(target.GetType(), typeof(T), target, out tempResult, formatProvider);
+
+            result = (T)tempResult;
 
             return success;
         }
@@ -24,8 +31,12 @@ namespace UniversalConverter
         {
             bool success = false;
 
+            object tempResult = default(Destination);
+
             lock (baton)
-                success = converter.TryConvert<Source, Destination>(target, out result, formatProvider);
+                success = converter.TryConvert(typeof(Source), typeof(Destination), target, out tempResult, formatProvider);
+
+            result = (Destination)tempResult;
 
             return success;
         }

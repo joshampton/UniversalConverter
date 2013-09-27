@@ -10,7 +10,6 @@ namespace UniversalConverter
     {
         private readonly IEnumerable<IConverter> converters;
         private readonly IDictionary<ConverterKey, IConverter> cachedConverters;
-        private readonly IEnumerable<Type> supportedTypes;
 
         public UniversalConverter()
         {
@@ -65,67 +64,67 @@ namespace UniversalConverter
             return successful;
         }
 
-        public bool TryConvert<T>(object source, out T result, IFormatProvider formatProvider = null)
-        {
-            if (source == null)
-                throw new ArgumentNullException("source");
+        //public bool TryConvert<T>(object source, out T result, IFormatProvider formatProvider = null)
+        //{
+        //    if (source == null)
+        //        throw new ArgumentNullException("source");
 
-            result = default(T);
-            object temp = null;
-            bool success = this.TryConvert(source.GetType(), typeof(T), source, out temp, formatProvider);
+        //    result = default(T);
+        //    object temp = null;
+        //    bool success = this.TryConvert(source.GetType(), typeof(T), source, out temp, formatProvider);
 
-            if (success)
-                result = (T)temp;
+        //    if (success)
+        //        result = (T)temp;
 
-            return success;
-        }
+        //    return success;
+        //}
 
-        public bool TryConvert<Source, Destination>(Source source, out Destination result, IFormatProvider formatProvider = null)
-        {
-            result = default(Destination);
-            bool sucess = false;
+        //public bool TryConvert<Source, Destination>(Source source, out Destination result, IFormatProvider formatProvider = null)
+        //{
+        //    result = default(Destination);
+        //    bool sucess = false;
 
-            if (typeof(Source).CanBeNull() && typeof(Destination).CanBeNull() && source.IsNull())
-            {
-                sucess = true;
-                result = default(Destination);
-                return sucess;
-            }
-            else
-            {
-                object temp = null;
-                sucess = TryConvert(typeof(Source), typeof(Destination), source, out temp, formatProvider);
-                if (sucess)
-                    result = (Destination)temp;
-                return sucess;
-            }
-        }
+        //    if (typeof(Source).CanBeNull() && typeof(Destination).CanBeNull() && source.IsNull())
+        //    {
+        //        sucess = true;
+        //        result = default(Destination);
+        //        return sucess;
+        //    }
+        //    else
+        //    {
+        //        object temp = null;
+        //        sucess = TryConvert(typeof(Source), typeof(Destination), source, out temp, formatProvider);
+        //        if (sucess)
+        //            result = (Destination)temp;
+        //        return sucess;
+        //    }
+        //}
 
-        public object Convert(Type sourceType, Type destinationType, object source, IFormatProvider formatProvider = null)
-        {
-            object temp = null;
+        //public object Convert(Type sourceType, Type destinationType, object source, IFormatProvider formatProvider = null)
+        //{
+        //    object temp = null;
 
-            this.TryConvert(sourceType, destinationType, source, out temp, formatProvider);
+        //    this.TryConvert(sourceType, destinationType, source, out temp, formatProvider);
 
-            return temp;
-        }
+        //    return temp;
+        //}
 
-        public T Convert<T>(object source, IFormatProvider formatProvider = null)
-        {
-            T result = default(T);
+        //public T Convert<T>(object source, IFormatProvider formatProvider = null)
+        //{
+        //    T result = default(T);
 
-            this.TryConvert<T>(source, out result, formatProvider);
+        //    this.TryConvert<T>(source, out result, formatProvider);
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public Destination Convert<Source, Destination>(Source source, IFormatProvider formatProvider = null)
-        {
-            Destination result = default(Destination);
+        //public Destination Convert<Source, Destination>(Source source, IFormatProvider formatProvider = null)
+        //{
+        //    Destination result = default(Destination);
 
-            this.TryConvert<Source, Destination>(source, out result, formatProvider);
+        //    this.TryConvert<Source, Destination>(source, out result, formatProvider);
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }
