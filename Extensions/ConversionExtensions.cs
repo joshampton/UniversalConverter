@@ -10,19 +10,19 @@ namespace UniversalConverter
         private static object baton = new object();
         private static UniversalConverter converter = new UniversalConverter();
 
-        public static bool TryConvert<T>(this object target, out T result, IFormatProvider formatProvider = null)
+        public static bool TryConvert<Destination>(this object target, out Destination result, IFormatProvider formatProvider = null)
         {
             if(target == null)
                 throw new ArgumentNullException("target");
 
             bool success = false;
 
-            object tempResult = default(T);
+            object tempResult = default(Destination);
 
             lock (baton)
-                success = converter.TryConvert(target.GetType(), typeof(T), target, out tempResult, formatProvider);
+                success = converter.TryConvert(target.GetType(), typeof(Destination), target, out tempResult, formatProvider);
 
-            result = (T)tempResult;
+            result = (Destination)tempResult;
 
             return success;
         }
@@ -39,6 +39,29 @@ namespace UniversalConverter
             result = (Destination)tempResult;
 
             return success;
+        }
+
+        public static Destination Convert<Destination>(this object target, IFormatProvider formatProvider = null)
+        {
+            if (target == null)
+                throw new ArgumentNullException("target");
+
+            object result = default(Destination);
+
+            lock (baton)
+                converter.TryConvert(target.GetType(), typeof(Destination), target, out result, formatProvider);
+
+            return (Destination)result;
+        }
+
+        public static Destination Convert<Source, Destination>(this Source target, IFormatProvider formatProvider = null)
+        {
+            object result = default(Destination);
+
+            lock (baton)
+                converter.TryConvert(typeof(Source), typeof(Destination), target, out result, formatProvider);
+
+            return (Destination)result;
         }
     }
 }
