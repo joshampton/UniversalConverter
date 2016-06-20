@@ -2,6 +2,6 @@
 {
     public interface IConverter
     {
-        bool TryConvert(ConverterContext context, out object result);
+        ConverterResult Convert(ConverterContext context);
     }
 }

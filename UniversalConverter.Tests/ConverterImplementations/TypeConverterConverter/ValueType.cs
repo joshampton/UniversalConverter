@@ -19,13 +19,13 @@ namespace UniversalConverter.Tests.ConverterImplementations
 
             var context = new ConverterContext(typeof(string), typeof(Guid), s, CultureInfo.CurrentCulture);
 
-            object result = null;
-            bool success = converter.TryConvert(context, out result);
+            var result = converter.Convert(context);
 
-            Assert.IsTrue(success);
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(Guid));
-            Assert.AreEqual(e, result);
+            Assert.IsNotNull(result.Result);
+            Assert.IsInstanceOfType(result.Result, typeof(Guid));
+            Assert.AreEqual(e, result.Result);
+            Assert.IsFalse(ReferenceEquals(e, result.Result));
         }
 
         [TestMethod]
@@ -34,11 +34,11 @@ namespace UniversalConverter.Tests.ConverterImplementations
             var converter = new TypeConverterConverter();
             var context = new ConverterContext(typeof(string), typeof(Guid), null, CultureInfo.CurrentCulture);
 
-            object result = null;
-            bool success = converter.TryConvert(context, out result);
+            var result = converter.Convert(context);
 
-            Assert.IsFalse(success);
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.Result);
+            Assert.IsFalse(result.Success);
         }
 
         [TestMethod]
@@ -47,13 +47,10 @@ namespace UniversalConverter.Tests.ConverterImplementations
             var converter = new TypeConverterConverter();
             var context = new ConverterContext(typeof(string), typeof(Guid?), null, CultureInfo.CurrentCulture);
 
-            int comp = 1;
-            object result = (object)comp;
-            bool success = converter.TryConvert(context, out result);
+            var result = converter.Convert(context);
 
-            Assert.IsTrue(success);
-            Assert.AreNotEqual(comp, result);
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Success);
         }
     }
 }

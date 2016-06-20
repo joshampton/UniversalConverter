@@ -21,40 +21,43 @@ namespace UniversalConverter
 
         public bool TryConvert(Type sourceType, Type destinationType, object source, out object result, IFormatProvider formatProvider = null)
         {
-            bool successful = false;
-            result = null;
+            //bool successful = false;
+            //result = null;
 
-            if (sourceType.IsNullable()) sourceType = Nullable.GetUnderlyingType(sourceType);
+            //if (sourceType.IsNullable()) sourceType = Nullable.GetUnderlyingType(sourceType);
 
-            if (destinationType.IsNullable()) destinationType = Nullable.GetUnderlyingType(destinationType);
+            //if (destinationType.IsNullable()) destinationType = Nullable.GetUnderlyingType(destinationType);
 
-            if (source == null)
-            {
-                result = destinationType.GetDefaultValue();
-                successful = true;
-                return successful;
-            }
+            //if (source == null)
+            //{
+            //    result = destinationType.GetDefaultValue();
+            //    successful = true;
+            //    return successful;
+            //}
 
-            var context = new ConverterContext(sourceType, destinationType, source, formatProvider ?? CultureInfo.CurrentCulture);
+            //var context = new ConverterContext(sourceType, destinationType, source, formatProvider ?? CultureInfo.CurrentCulture);
 
-            IConverter cachedConverter = null;
-            if (cachedConverters.TryGetValue(context.Key, out cachedConverter))
-            {
-                successful = cachedConverter.TryConvert(context, out result);
-            }
-            else
-            {
-                foreach (var converter in converters)
-                {
-                    if (successful = converter.TryConvert(context, out result))
-                    {
-                        cachedConverters[context.Key] = converter;
-                        break;
-                    }
-                }
-            }
+            //IConverter cachedConverter = null;
+            //ConverterResult converterResult = null;
+            //if (cachedConverters.TryGetValue(context.Key, out cachedConverter))
+            //{
+            //    converterResult = cachedConverter.TryConvert(context);
+            //}
+            //else
+            //{
+            //    foreach (var converter in converters)
+            //    {
+            //        if (successful = converter.TryConvert(context, out result))
+            //        {
+            //            cachedConverters[context.Key] = converter;
+            //            break;
+            //        }
+            //    }
+            //}
 
-            return successful;
+            //return successful;
+
+            throw new NotImplementedException();
         }
     }
 }

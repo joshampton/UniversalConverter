@@ -22,21 +22,26 @@ namespace UniversalConverter
             return converter;
         }
 
-        public bool TryConvert(ConverterContext context, out object result)
+        public ConverterResult Convert(ConverterContext context)
         {
-            bool success = false;
-            result = null;
+            ConverterResult result = null;
 
-            TypeConverter converter = GetConverter(context.DestinationType);
+            var converter = GetConverter(context.DestinationType);
 
             try
             {
-                result = converter.ConvertFrom(context.Source);
-                success = true;
+                result = new ConverterResult(
+                    result: converter.ConvertFrom(context.Source),
+                    success: true);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                result = new ConverterResult(
+                    exception: ex,
+                    success: false);
+            }
 
-            return success;
+            return result;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace UniversalConverter
 
         public IConvertibleConverter()
         {
-            supportedDestinationTypes = new List<Type> 
+            supportedDestinationTypes = new Type[]
             {
                 typeof(bool),
                 typeof(byte),
@@ -30,21 +30,33 @@ namespace UniversalConverter
             };
         }
 
-        public bool TryConvert(ConverterContext context, out object result)
+        public ConverterResult Convert(ConverterContext context)
         {
-            bool success = false;
-            result = null;
+            ConverterResult result = null;
 
-            if (!supportedDestinationTypes.Contains(context.DestinationType) || typeof(IConvertible).IsAssignableFrom(context.SourceType)) return success;
-
-            try
+            if (!supportedDestinationTypes.Contains(context.DestinationType) || typeof(IConvertible).IsAssignableFrom(context.SourceType))
             {
-                result = ((IConvertible)context.Source).ToType(context.DestinationType, CultureInfo.CurrentCulture);
-                success = true;
+                result = new ConverterResult(success: false);
             }
-            catch { }
+            else
+            {
+                try
+                {
+                    result = new ConverterResult(
+                        result: ((IConvertible)context.Source).ToType(context.DestinationType, context.FormatProvider),
+                        success: true
+                    );
+                }
+                catch (Exception ex)
+                {
+                    result = new ConverterResult(
+                        exception: ex,
+                        success: false
+                    );
+                }
+            }
 
-            return success;
+            return result;
         }
     }
 }
