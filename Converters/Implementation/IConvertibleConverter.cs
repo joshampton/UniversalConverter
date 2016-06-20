@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace UniversalConverter
@@ -12,7 +11,7 @@ namespace UniversalConverter
 
         public IConvertibleConverter()
         {
-            this.supportedDestinationTypes = new List<Type> 
+            supportedDestinationTypes = new List<Type> 
             {
                 typeof(bool),
                 typeof(byte),
@@ -36,8 +35,7 @@ namespace UniversalConverter
             bool success = false;
             result = null;
 
-            if (!supportedDestinationTypes.Contains(context.DestinationType) || typeof(IConvertible).IsAssignableFrom(context.SourceType))
-                return success;
+            if (!supportedDestinationTypes.Contains(context.DestinationType) || typeof(IConvertible).IsAssignableFrom(context.SourceType)) return success;
 
             try
             {

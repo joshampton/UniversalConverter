@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace UniversalConverter
 {
@@ -12,15 +9,13 @@ namespace UniversalConverter
 
         public static bool TryConvert<Destination>(this object target, out Destination result, IFormatProvider formatProvider = null)
         {
-            if(target == null)
-                throw new ArgumentNullException("target");
+            if(target == null) throw new ArgumentNullException("target");
 
             bool success = false;
 
             object tempResult = default(Destination);
 
-            lock (baton)
-                success = converter.TryConvert(target.GetType(), typeof(Destination), target, out tempResult, formatProvider);
+            lock (baton) success = converter.TryConvert(target.GetType(), typeof(Destination), target, out tempResult, formatProvider);
 
             result = (Destination)tempResult;
 
@@ -33,8 +28,7 @@ namespace UniversalConverter
 
             object tempResult = default(Destination);
 
-            lock (baton)
-                success = converter.TryConvert(typeof(Source), typeof(Destination), target, out tempResult, formatProvider);
+            lock (baton) success = converter.TryConvert(typeof(Source), typeof(Destination), target, out tempResult, formatProvider);
 
             result = (Destination)tempResult;
 
@@ -43,13 +37,11 @@ namespace UniversalConverter
 
         public static Destination Convert<Destination>(this object target, IFormatProvider formatProvider = null)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            if (target == null) throw new ArgumentNullException("target");
 
             object result = default(Destination);
 
-            lock (baton)
-                converter.TryConvert(target.GetType(), typeof(Destination), target, out result, formatProvider);
+            lock (baton) converter.TryConvert(target.GetType(), typeof(Destination), target, out result, formatProvider);
 
             return (Destination)result;
         }
@@ -58,8 +50,7 @@ namespace UniversalConverter
         {
             object result = default(Destination);
 
-            lock (baton)
-                converter.TryConvert(typeof(Source), typeof(Destination), target, out result, formatProvider);
+            lock (baton) converter.TryConvert(typeof(Source), typeof(Destination), target, out result, formatProvider);
 
             return (Destination)result;
         }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Collections.Specialized;
 
 namespace UniversalConverter
@@ -13,8 +11,7 @@ namespace UniversalConverter
             bool success = false;
             value = default(T);
 
-            if (target.AllKeys.Any(k => key.Equals(k, comparison)))
-                success = target[key].TryConvert<T>(out value);
+            if (target.AllKeys.Any(k => key.Equals(k, comparison))) success = target[key].TryConvert<T>(out value);
 
             return success;
         }

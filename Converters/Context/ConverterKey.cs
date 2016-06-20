@@ -7,16 +7,14 @@ namespace UniversalConverter
         private readonly Type sourceType;
         private readonly Type destinationType;
 
-        public Type SourceType { get { return this.sourceType; } }
-        public Type DestinationType { get { return this.destinationType; } }
+        public Type SourceType { get { return sourceType; } }
+        public Type DestinationType { get { return destinationType; } }
 
         public ConverterKey(Type sourceType, Type destinationType)
         {
-            if (sourceType == null)
-                throw new ArgumentNullException("sourceType");
+            if (sourceType == null) throw new ArgumentNullException("sourceType");
 
-            if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+            if (destinationType == null) throw new ArgumentNullException("destinationType");
 
             this.sourceType = sourceType;
             this.destinationType = destinationType;
@@ -41,14 +39,14 @@ namespace UniversalConverter
         public bool Equals(ConverterKey other)
         {
             return other != null
-                && other.SourceType == this.SourceType
-                && other.DestinationType == this.DestinationType;
+                && other.SourceType == SourceType
+                && other.DestinationType == DestinationType;
         }
 
         public static bool operator ==(ConverterKey left, ConverterKey right)
         {
-            return (object.ReferenceEquals(left, null) && object.ReferenceEquals(right, null))
-                || (!object.ReferenceEquals(left, null) && left.Equals(right));
+            return (ReferenceEquals(left, null) && ReferenceEquals(right, null))
+                || (!ReferenceEquals(left, null) && left.Equals(right));
         }
 
         public static bool operator !=(ConverterKey left, ConverterKey right)

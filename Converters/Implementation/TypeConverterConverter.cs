@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
 namespace UniversalConverter
@@ -12,15 +10,14 @@ namespace UniversalConverter
 
         public TypeConverterConverter()
         {
-            this.converterCache = new Dictionary<Type, TypeConverter>();
+            converterCache = new Dictionary<Type, TypeConverter>();
         }
 
         private TypeConverter GetConverter(Type type)
         {
             TypeConverter converter = null;
 
-            if (!converterCache.TryGetValue(type, out converter))
-                converter = converterCache[type] = TypeDescriptor.GetConverter(type);
+            if (!converterCache.TryGetValue(type, out converter)) converter = converterCache[type] = TypeDescriptor.GetConverter(type);
 
             return converter;
         }
